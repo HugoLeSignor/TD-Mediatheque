@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #e8f4f8;
+}
+
+h1 {
+    text-align: center;
+    background-color: #4a90e2;
+    color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    padding-bottom: 10px;
+}
+
+h3 {
+    color: #555;
+}
+
+img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.user-info {
+    background-color: #d4edda;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #155724;
+}
+
+.nav-links {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.nav-links a {
+    display: inline-block;
+    margin: 5px 10px 5px 0;
+    padding: 10px 20px;
+    background-color: #4a90e2;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    background-color: #357abd;
+}
+
+.film-list {
+    list-style: none;
+    padding: 0;
+}
+
+.film-item,
+.film-card,
+.film-detail {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.film-info {
+    margin-top: 10px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.duree {
+    color: #e67e22;
+    font-weight: bold;
+}
+
+.no-films {
+    background-color: #fff3cd;
+    padding: 20px;
+    color: #856404;
+    text-align: center;
+}
+
+form {
+    background-color: white;
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    color: #333;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="file"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #357abd;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.synopsis {
+    background-color: #f5f5f5;
+    padding: 20px;
+    line-height: 1.8;
+    color: #333;
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+.actions a {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #f39c12;
+    color: white;
+    text-decoration: none;
+}
+
+.actions a:hover {
+    background-color: #e67e22;
+}
+
+.actions a.delete {
+    background-color: #e74c3c;
+}
+
+.actions a.delete:hover {
+    background-color: #c0392b;
+}
