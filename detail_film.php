@@ -12,16 +12,13 @@ if (!isset($_GET['id'])) {
 $film_id = $_GET['id'];
 
 // Récupérer le film
-try {
-    $stmt = $pdo->prepare("SELECT * FROM fiche_film WHERE id = :id");
-    $stmt->execute([':id' => $film_id]);
-    $film = $stmt->fetch();
+$sql = "SELECT * FROM fiche_film WHERE id = :id";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(array(':id' => $film_id));
+$film = $stmt->fetch();
 
-    if (!$film) {
-        die("Film non trouvé.");
-    }
-} catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
+if (!$film) {
+    die("Film non trouvé.");
 }
 ?>
 <!DOCTYPE html>

@@ -1,23 +1,28 @@
 <?php
 require_once 'config.php';
 
-// Traitement du formulaire d'inscription
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$message = '';
+
+// Si le formulaire est envoyé
+if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['password'])) {
     $nom = trim($_POST['nom']);
     $prenom = trim($_POST['prenom']);
     $password = $_POST['password'];
 
+    // Vérifier que tous les champs sont remplis
     if (!empty($nom) && !empty($prenom) && !empty($password)) {
         // Crypter le mot de passe
         $password_crypte = password_hash($password, PASSWORD_DEFAULT);
 
+        // Insérer dans la base de données
         try {
-            $stmt = $pdo->prepare("INSERT INTO user (nom, prenom, password) VALUES (:nom, :prenom, :password)");
-            $stmt->execute([
+            $sql = "INSERT INTO user (nom, prenom, password) VALUES (:nom, :prenom, :password)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(
                 ':nom' => $nom,
                 ':prenom' => $prenom,
                 ':password' => $password_crypte
-            ]);
+            ));
             $message = "Inscription réussie !";
         } catch (PDOException $e) {
             $message = "Erreur : " . $e->getMessage();
@@ -45,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="connexion.php">Se connecter</a>
         </div>
 
-        <?php if (isset($message)): ?>
+        <?php if (!empty($message)): ?>
             <div class="success"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
         <div class="form-group">

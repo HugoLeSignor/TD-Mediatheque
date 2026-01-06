@@ -4,12 +4,9 @@ require_once 'functions.php';
 session_start();
 
 // Récupérer tous les films
-try {
-    $stmt = $pdo->query("SELECT * FROM fiche_film ORDER BY id DESC");
-    $films = $stmt->fetchAll();
-} catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
-}
+$sql = "SELECT * FROM fiche_film ORDER BY id DESC";
+$stmt = $pdo->query($sql);
+$films = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">

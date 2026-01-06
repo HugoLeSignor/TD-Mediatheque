@@ -8,41 +8,48 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Traitement du formulaire
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$message = '';
+
+// Si le formulaire est envoyé
+if (isset($_POST['titre'])) {
     $titre = trim($_POST['titre']);
     $realisateur = trim($_POST['realisateur']);
     $genre = trim($_POST['genre']);
     $duree = trim($_POST['duree']);
     $synopsis = trim($_POST['synopsis']);
 
-    if (!empty($titre) && !empty($realisateur) && !empty($genre) && !empty($duree) && !empty($synopsis)) {
-        // Gérer l'upload de l'image (optionnel)
+    // Vérifier que tous les champs sont remplis
+    if (empty($titre) || empty($realisateur) || empty($genre) || empty($duree) || empty($synopsis)) {
+        $message = "Veuillez remplir tous les champs.";
+    } else {
         $image_name = null;
 
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        // Gérer l'upload de l'image si elle existe
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $upload_dir = 'uploads/';
 
-            // Créer le dossier uploads s'il n'existe pas
+            // Créer le dossier s'il n'existe pas
             if (!is_dir($upload_dir)) {
                 mkdir($upload_dir, 0777, true);
             }
 
-            // Générer un nom unique pour l'image
+            // Récupérer l'extension du fichier
             $image_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
             $image_name = uniqid() . '.' . $image_extension;
             $upload_path = $upload_dir . $image_name;
 
-            // Déplacer le fichier uploadé
+            // Déplacer le fichier
             if (!move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
                 $message = "Erreur lors de l'upload de l'image.";
                 $image_name = null;
             }
         }
 
-        try {
-            $stmt = $pdo->prepare("INSERT INTO fiche_film (titre, realisateur, genre, duree, synopsis, image, user_id) VALUES (:titre, :realisateur, :genre, :duree, :synopsis, :image, :user_id)");
-            $stmt->execute([
+        // Si pas d'erreur, insérer dans la base de données
+        if (empty($message)) {
+            $sql = "INSERT INTO fiche_film (titre, realisateur, genre, duree, synopsis, image, user_id) VALUES (:titre, :realisateur, :genre, :duree, :synopsis, :image, :user_id)";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(array(
                 ':titre' => $titre,
                 ':realisateur' => $realisateur,
                 ':genre' => $genre,
@@ -50,13 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':synopsis' => $synopsis,
                 ':image' => $image_name,
                 ':user_id' => $_SESSION['user_id']
-            ]);
+            ));
             $message = "Film ajouté avec succès !";
-        } catch (PDOException $e) {
-            $message = "Erreur : " . $e->getMessage();
         }
-    } else {
-        $message = "Veuillez remplir tous les champs.";
     }
 }
 ?>
@@ -77,9 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php">Retour à l'accueil</a>
         </div>
 
-        <?php if (isset($message)): ?>
+        <?php if (!empty($message)): ?>
             <div class="success"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
+
         <div class="form-group">
             <label for="titre">Titre :</label>
             <input type="text" id="titre" name="titre" required>

@@ -4,12 +4,9 @@ require_once 'functions.php';
 session_start();
 
 // Récupérer les 3 derniers films
-try {
-    $stmt = $pdo->query("SELECT * FROM fiche_film ORDER BY id DESC LIMIT 3");
-    $films = $stmt->fetchAll();
-} catch (PDOException $e) {
-    die("Erreur lors de la récupération des films : " . $e->getMessage());
-}
+$sql = "SELECT * FROM fiche_film ORDER BY id DESC LIMIT 3";
+$stmt = $pdo->query($sql);
+$films = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -49,9 +46,9 @@ try {
                 <li class="film-item">
                     <strong><?php echo htmlspecialchars($film['titre']); ?></strong>
                     <div class="film-info">
-                        <strong>Réalisateur:</strong> <?php echo htmlspecialchars($film['realisateur']); ?><br>
-                        <strong>Genre:</strong> <?php echo htmlspecialchars($film['genre']); ?><br>
-                        <strong>Durée:</strong> <span class="duree"><?php echo formatDuree($film['duree']); ?></span>
+                        <strong>Réalisateur :</strong> <?php echo htmlspecialchars($film['realisateur']); ?><br>
+                        <strong>Genre :</strong> <?php echo htmlspecialchars($film['genre']); ?><br>
+                        <strong>Durée :</strong> <span class="duree"><?php echo formatDuree($film['duree']); ?></span>
                     </div>
                 </li>
             <?php endforeach; ?>
