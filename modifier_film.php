@@ -42,7 +42,8 @@ if (isset($_POST['titre'])) {
     $synopsis = trim($_POST['synopsis']);
 
     // Vérifier que tous les champs sont remplis
-    if (!empty($titre) && !empty($realisateur) && !empty($genre) && !empty($duree) && !empty($synopsis)) {
+    if (!empty($titre) && !empty($realisateur) && 
+        !empty($genre) && !empty($duree) && !empty($synopsis)) {
         // Garder l'ancienne image par défaut
         $image_name = $film['image'];
 
@@ -56,14 +57,18 @@ if (isset($_POST['titre'])) {
             }
 
             // Récupérer l'extension du fichier
-            $image_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $image_extension = pathinfo(
+                $_FILES['image']['name'], 
+                PATHINFO_EXTENSION
+            );
             $image_name = uniqid() . '.' . $image_extension;
             $upload_path = $upload_dir . $image_name;
 
             // Déplacer le fichier
             if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
                 // Supprimer l'ancienne image si elle existe
-                if ($film['image'] && file_exists($upload_dir . $film['image'])) {
+                if ($film['image'] && 
+                    file_exists($upload_dir . $film['image'])) {
                     unlink($upload_dir . $film['image']);
                 }
             } else {
@@ -74,7 +79,11 @@ if (isset($_POST['titre'])) {
 
         // Si pas d'erreur, mettre à jour dans la base de données
         if (empty($message)) {
-            $sql = "UPDATE fiche_film SET titre = :titre, realisateur = :realisateur, genre = :genre, duree = :duree, synopsis = :synopsis, image = :image WHERE id = :id";
+            $sql = "UPDATE fiche_film 
+                    SET titre = :titre, realisateur = :realisateur, 
+                        genre = :genre, duree = :duree, 
+                        synopsis = :synopsis, image = :image 
+                    WHERE id = :id";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array(
                 ':titre' => $titre,
@@ -100,65 +109,90 @@ if (isset($_POST['titre'])) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <title>Modifier un film</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <h1>Modifier la fiche de film</h1>
-
-    <form method="POST" action="" enctype="multipart/form-data">
-        <div class="nav-links">
+    <header>
+        <h1>Modifier la fiche de film</h1>
+        <nav class="nav-links">
             <a href="films.php">Retour à la liste</a>
-        </div>
+        </nav>
+    </header>
 
-        <?php if (!empty($message)): ?>
-            <div class="success"><?php echo htmlspecialchars($message); ?></div>
-        <?php endif; ?>
-        <div class="form-group">
-            <label for="titre">Titre :</label>
-            <input type="text" id="titre" name="titre" value="<?php echo htmlspecialchars($film['titre']); ?>" required>
-        </div>
+    <main>
+        <section>
+            <?php if (!empty($message)): ?>
+                <div class="success">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+            <?php endif; ?>
 
-        <div class="form-group">
-            <label for="realisateur">Réalisateur :</label>
-            <input type="text" id="realisateur" name="realisateur"
-                value="<?php echo htmlspecialchars($film['realisateur']); ?>" required>
-        </div>
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="titre">Titre :</label>
+                    <input 
+                        type="text" 
+                        id="titre" 
+                        name="titre" 
+                        value="<?php echo htmlspecialchars($film['titre']); ?>" 
+                        required>
+                </div>
 
-        <div class="form-group">
-            <label for="genre">Genre :</label>
-            <input type="text" id="genre" name="genre" value="<?php echo htmlspecialchars($film['genre']); ?>" required>
-        </div>
+                <div class="form-group">
+                    <label for="realisateur">Réalisateur :</label>
+                    <input 
+                        type="text" 
+                        id="realisateur" 
+                        name="realisateur"
+                        value="<?php echo htmlspecialchars($film['realisateur']); ?>" 
+                        required>
+                </div>
 
-        <div class="form-group">
-            <label for="duree">Durée (en minutes) :</label>
-            <input type="number" id="duree" name="duree" value="<?php echo $film['duree']; ?>" required>
-        </div>
+                <div class="form-group">
+                    <label for="genre">Genre :</label>
+                    <input 
+                        type="text" 
+                        id="genre" 
+                        name="genre" 
+                        value="<?php echo htmlspecialchars($film['genre']); ?>" 
+                        required>
+                </div>
 
-        <div class="form-group">
-            <label for="synopsis">Synopsis :</label>
-            <textarea id="synopsis" name="synopsis" rows="6"
-                required><?php echo htmlspecialchars($film['synopsis']); ?></textarea>
-        </div>
+                <div class="form-group">
+                    <label for="duree">Durée (en minutes) :</label>
+                    <input type="number" id="duree" name="duree" value="<?php echo $film['duree']; ?>" required>
+                </div>
 
-        <?php if ($film['image']): ?>
-            <div>
-                <strong>Image actuelle :</strong>
-                <br><img src="uploads/<?php echo htmlspecialchars($film['image']); ?>" alt="Image actuelle" width="200">
-            </div>
-        <?php endif; ?>
+                <div class="form-group">
+                    <label for="synopsis">Synopsis :</label>
+                    <textarea 
+                        id="synopsis" 
+                        name="synopsis" 
+                        rows="6"
+                        required><?php echo htmlspecialchars($film['synopsis']); ?></textarea>
+                </div>
 
-        <div class="form-group">
-            <label for="image">Changer l'image (optionnel) :</label>
-            <input type="file" id="image" name="image" accept="image/*">
-        </div>
+                <?php if ($film['image']): ?>
+                    <div class="form-group">
+                        <label>Image actuelle :</label>
+                        <img 
+                            src="uploads/<?php echo htmlspecialchars($film['image']); ?>" 
+                            alt="Image actuelle" 
+                            width="200">
+                    </div>
+                <?php endif; ?>
 
-        <button type="submit">Modifier le film</button>
-    </form>
+                <div class="form-group">
+                    <label for="image">Changer l'image (optionnel) :</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+
+                <button type="submit">Modifier le film</button>
+            </form>
+        </section>
+    </main>
 </body>
-
 </html>

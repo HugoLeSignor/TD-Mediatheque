@@ -6,12 +6,52 @@ body {
     background-color: #e8f4f8;
 }
 
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    text-align: center;
+    background-color: #4a90e2;
+    color: white;
+    padding: 20px;
+    margin-bottom: 0;
+}
+
 h1 {
     text-align: center;
     background-color: #4a90e2;
     color: white;
     padding: 20px;
     margin-bottom: 20px;
+}
+
+main {
+    margin-top: 20px;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+article {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+aside {
+    background-color: #d4edda;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #155724;
+}
+
+nav {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 h2 {
@@ -40,7 +80,7 @@ img {
 .nav-links {
     background-color: white;
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     text-align: center;
 }
 
@@ -114,6 +154,8 @@ select {
     margin-top: 5px;
     background-color: #f9f9f9;
     font-family: Arial, sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 textarea {

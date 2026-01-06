@@ -43,29 +43,36 @@ if (isset($_POST['nom']) && isset($_POST['password'])) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Connexion</h1>
+    <header>
+        <h1>Connexion</h1>
+        <nav class="nav-links">
+            <a href="index.php">Retour à l'accueil</a>
+            <a href="inscription.php">S'inscrire</a>
+        </nav>
+    </header>
 
-    <div class="nav-links">
-        <a href="index.php">Retour à l'accueil</a>
-        <a href="inscription.php">S'inscrire</a>
-    </div>
+    <main>
+        <section>
+            <?php if (!empty($message)): ?>
+                <div class="error">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+            <?php endif; ?>
 
-    <?php if (!empty($message)): ?>
-        <div class="error"><?php echo htmlspecialchars($message); ?></div>
-    <?php endif; ?>
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
 
-    <form method="POST" action="">
-        <div class="form-group">
-            <label for="nom">Nom :</label>
-            <input type="text" id="nom" name="nom" required>
-        </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
 
-        <div class="form-group">
-            <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-
-        <button type="submit">Se connecter</button>
-    </form>
+                <button type="submit">Se connecter</button>
+            </form>
+        </section>
+    </main>
 </body>
 </html>

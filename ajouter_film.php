@@ -19,7 +19,8 @@ if (isset($_POST['titre'])) {
     $synopsis = trim($_POST['synopsis']);
 
     // Vérifier que tous les champs sont remplis
-    if (empty($titre) || empty($realisateur) || empty($genre) || empty($duree) || empty($synopsis)) {
+    if (empty($titre) || empty($realisateur) || 
+        empty($genre) || empty($duree) || empty($synopsis)) {
         $message = "Veuillez remplir tous les champs.";
     } else {
         $image_name = null;
@@ -34,7 +35,10 @@ if (isset($_POST['titre'])) {
             }
 
             // Récupérer l'extension du fichier
-            $image_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $image_extension = pathinfo(
+                $_FILES['image']['name'], 
+                PATHINFO_EXTENSION
+            );
             $image_name = uniqid() . '.' . $image_extension;
             $upload_path = $upload_dir . $image_name;
 
@@ -47,7 +51,10 @@ if (isset($_POST['titre'])) {
 
         // Si pas d'erreur, insérer dans la base de données
         if (empty($message)) {
-            $sql = "INSERT INTO fiche_film (titre, realisateur, genre, duree, synopsis, image, user_id) VALUES (:titre, :realisateur, :genre, :duree, :synopsis, :image, :user_id)";
+            $sql = "INSERT INTO fiche_film 
+                    (titre, realisateur, genre, duree, synopsis, image, user_id) 
+                    VALUES 
+                    (:titre, :realisateur, :genre, :duree, :synopsis, :image, :user_id)";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(array(
                 ':titre' => $titre,
@@ -65,57 +72,61 @@ if (isset($_POST['titre'])) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <title>Ajouter un film</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <h1>Ajouter une fiche de film</h1>
-
-    <form method="POST" action="" enctype="multipart/form-data">
-        <div class="nav-links">
+    <header>
+        <h1>Ajouter une fiche de film</h1>
+        <nav class="nav-links">
             <a href="index.php">Retour à l'accueil</a>
-        </div>
+        </nav>
+    </header>
 
-        <?php if (!empty($message)): ?>
-            <div class="success"><?php echo htmlspecialchars($message); ?></div>
-        <?php endif; ?>
+    <main>
+        <section>
+            <?php if (!empty($message)): ?>
+                <div class="success">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+            <?php endif; ?>
 
-        <div class="form-group">
-            <label for="titre">Titre :</label>
-            <input type="text" id="titre" name="titre" required>
-        </div>
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="titre">Titre :</label>
+                    <input type="text" id="titre" name="titre" required>
+                </div>
 
-        <div class="form-group">
-            <label for="realisateur">Réalisateur :</label>
-            <input type="text" id="realisateur" name="realisateur" required>
-        </div>
+                <div class="form-group">
+                    <label for="realisateur">Réalisateur :</label>
+                    <input type="text" id="realisateur" name="realisateur" required>
+                </div>
 
-        <div class="form-group">
-            <label for="genre">Genre :</label>
-            <input type="text" id="genre" name="genre" required>
-        </div>
+                <div class="form-group">
+                    <label for="genre">Genre :</label>
+                    <input type="text" id="genre" name="genre" required>
+                </div>
 
-        <div class="form-group">
-            <label for="duree">Durée (en minutes) :</label>
-            <input type="number" id="duree" name="duree" required>
-        </div>
+                <div class="form-group">
+                    <label for="duree">Durée (en minutes) :</label>
+                    <input type="number" id="duree" name="duree" required>
+                </div>
 
-        <div class="form-group">
-            <label for="synopsis">Synopsis :</label>
-            <textarea id="synopsis" name="synopsis" rows="6" required></textarea>
-        </div>
+                <div class="form-group">
+                    <label for="synopsis">Synopsis :</label>
+                    <textarea id="synopsis" name="synopsis" rows="6" required></textarea>
+                </div>
 
-        <div class="form-group">
-            <label for="image">Image (optionnel) :</label>
-            <input type="file" id="image" name="image" accept="image/*">
-        </div>
+                <div class="form-group">
+                    <label for="image">Image (optionnel) :</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
 
-        <button type="submit">Ajouter le film</button>
-    </form>
+                <button type="submit">Ajouter le film</button>
+            </form>
+        </section>
+    </main>
 </body>
-
 </html>
