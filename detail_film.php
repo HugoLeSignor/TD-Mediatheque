@@ -20,26 +20,15 @@ $film = $stmt->fetch();
 if (!$film) {
     die("Film non trouvé.");
 }
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title><?php echo htmlspecialchars($film['titre']); ?></title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>
-            <?php echo htmlspecialchars($film['titre']); ?>
-        </h1>
-        <nav class="nav-links">
-            <a href="films.php">Retour à la liste</a>
-            <a href="index.php">Retour à l'accueil</a>
-        </nav>
-    </header>
 
-    <main>
+$page_title = htmlspecialchars($film['titre']);
+$page_h1 = htmlspecialchars($film['titre']);
+$nav_links = [
+    ['url' => 'films.php', 'text' => 'Retour à la liste'],
+    ['url' => 'index.php', 'text' => 'Retour à l\'accueil']
+];
+include 'includes/header.php';
+?>
         <article class="film-detail">
             <?php if ($film['image']): ?>
                 <img 
@@ -72,6 +61,4 @@ if (!$film) {
                 </div>
             </section>
         </article>
-    </main>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

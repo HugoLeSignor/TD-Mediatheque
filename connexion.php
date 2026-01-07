@@ -34,24 +34,15 @@ if (isset($_POST['nom']) && isset($_POST['password'])) {
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Connexion</h1>
-        <nav class="nav-links">
-            <a href="index.php">Retour à l'accueil</a>
-            <a href="inscription.php">S'inscrire</a>
-        </nav>
-    </header>
 
-    <main>
+$page_title = 'Connexion';
+$page_h1 = 'Connexion';
+$nav_links = [
+    ['url' => 'index.php', 'text' => 'Retour à l\'accueil'],
+    ['url' => 'inscription.php', 'text' => 'S\'inscrire']
+];
+include 'includes/header.php';
+?>
         <section>
             <?php if (!empty($message)): ?>
                 <div class="error">
@@ -73,6 +64,4 @@ if (isset($_POST['nom']) && isset($_POST['password'])) {
                 <button type="submit">Se connecter</button>
             </form>
         </section>
-    </main>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

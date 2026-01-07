@@ -7,41 +7,11 @@ session_start();
 $sql = "SELECT * FROM fiche_film ORDER BY id DESC LIMIT 3";
 $stmt = $pdo->query($sql);
 $films = $stmt->fetchAll();
+
+$page_title = 'Médiathèque';
+$page_h1 = 'Médiathèque';
+include 'includes/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Médiathèque</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Médiathèque</h1>
-        
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <aside class="user-info">
-                <strong>
-                    Bonjour 
-                    <?php echo htmlspecialchars($_SESSION['user_nom']); ?>
-                    <?php echo htmlspecialchars($_SESSION['user_prenom']); ?>
-                </strong>
-            </aside>
-        <?php endif; ?>
-
-        <nav class="nav-links">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="deconnexion.php">Se déconnecter</a>
-            <?php else: ?>
-                <a href="connexion.php">Se connecter</a>
-                <a href="inscription.php">S'inscrire</a>
-            <?php endif; ?>
-            <a href="ajouter_film.php">Ajouter un film</a>
-            <a href="films.php">Tous les films</a>
-        </nav>
-    </header>
-
-    <main>
         <section>
             <h2>Les 3 derniers films ajoutés</h2>
 
@@ -75,6 +45,4 @@ $films = $stmt->fetchAll();
                 <p class="no-films">Aucun film dans la base de données.</p>
             <?php endif; ?>
         </section>
-    </main>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

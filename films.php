@@ -7,24 +7,15 @@ session_start();
 $sql = "SELECT * FROM fiche_film ORDER BY id DESC";
 $stmt = $pdo->query($sql);
 $films = $stmt->fetchAll();
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Tous les films</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Tous les films</h1>
-        <nav class="nav-links">
-            <a href="index.php">Retour à l'accueil</a>
-            <a href="ajouter_film.php">Ajouter un film</a>
-        </nav>
-    </header>
 
-    <main>
+$page_title = 'Tous les films';
+$page_h1 = 'Tous les films';
+$nav_links = [
+    ['url' => 'index.php', 'text' => 'Retour à l\'accueil'],
+    ['url' => 'ajouter_film.php', 'text' => 'Ajouter un film']
+];
+include 'includes/header.php';
+?>
         <section>
             <h2>
                 Liste complète (<?php echo count($films); ?> films)
@@ -80,6 +71,4 @@ $films = $stmt->fetchAll();
                 <p class="no-films">Aucun film dans la base de données.</p>
             <?php endif; ?>
         </section>
-    </main>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

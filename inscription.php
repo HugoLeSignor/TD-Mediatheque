@@ -34,24 +34,15 @@ if (isset($_POST['nom']) &&
         $message = "Veuillez remplir tous les champs.";
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Inscription</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Inscription</h1>
-        <nav class="nav-links">
-            <a href="index.php">Retour à l'accueil</a>
-            <a href="connexion.php">Se connecter</a>
-        </nav>
-    </header>
 
-    <main>
+$page_title = 'Inscription';
+$page_h1 = 'Inscription';
+$nav_links = [
+    ['url' => 'index.php', 'text' => 'Retour à l\'accueil'],
+    ['url' => 'connexion.php', 'text' => 'Se connecter']
+];
+include 'includes/header.php';
+?>
         <section>
             <?php if (!empty($message)): ?>
                 <div class="success">
@@ -78,6 +69,4 @@ if (isset($_POST['nom']) &&
                 <button type="submit">S'inscrire</button>
             </form>
         </section>
-    </main>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>

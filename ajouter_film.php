@@ -69,23 +69,14 @@ if (isset($_POST['titre'])) {
         }
     }
 }
-?>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Ajouter un film</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Ajouter une fiche de film</h1>
-        <nav class="nav-links">
-            <a href="index.php">Retour à l'accueil</a>
-        </nav>
-    </header>
 
-    <main>
+$page_title = 'Ajouter un film';
+$page_h1 = 'Ajouter une fiche de film';
+$nav_links = [
+    ['url' => 'index.php', 'text' => 'Retour à l\'accueil']
+];
+include 'includes/header.php';
+?>
         <section>
             <?php if (!empty($message)): ?>
                 <div class="success">
@@ -127,6 +118,4 @@ if (isset($_POST['titre'])) {
                 <button type="submit">Ajouter le film</button>
             </form>
         </section>
-    </main>
-</body>
-</html>
+<?php include 'includes/footer.php'; ?>
