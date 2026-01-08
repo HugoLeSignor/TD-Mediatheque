@@ -23,7 +23,12 @@ include 'includes/header.php';
         <ul class="film-list">
             <?php foreach ($films as $film): ?>
                 <li class="film-item">
-                    <article>
+                    <?php if ($film['image']): ?>
+                        <img src="uploads/<?php echo htmlspecialchars($film['image']); ?>"
+                            alt="<?php echo htmlspecialchars($film['titre']); ?>" width="200">
+                    <?php endif; ?>
+
+                    <div>
                         <h3><?php echo htmlspecialchars($film['titre']); ?></h3>
                         <div class="film-info">
                             <p>
@@ -41,7 +46,10 @@ include 'includes/header.php';
                                 </span>
                             </p>
                         </div>
-                    </article>
+                        <nav class="actions">
+                            <a href="detail_film.php?id=<?php echo $film['id']; ?>">Voir plus</a>
+                        </nav>
+                    </div>
                 </li>
             <?php endforeach; ?>
         </ul>
