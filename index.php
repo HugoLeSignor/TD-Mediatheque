@@ -20,39 +20,24 @@ include 'includes/header.php';
     <h2>Les 3 derniers films ajoutés</h2>
 
     <?php if (count($films) > 0): ?>
-        <ul class="film-list">
+        <div class="film-grid">
             <?php foreach ($films as $film): ?>
-                <li class="film-item">
+                <a href="detail_film.php?id=<?php echo $film['id']; ?>" class="film-poster">
                     <?php if ($film['image']): ?>
                         <img src="uploads/<?php echo htmlspecialchars($film['image']); ?>"
-                            alt="<?php echo htmlspecialchars($film['titre']); ?>" width="200">
-                    <?php endif; ?>
-
-                    <div>
-                        <h3><?php echo htmlspecialchars($film['titre']); ?></h3>
-                        <div class="film-info">
-                            <p>
-                                <strong>Réalisateur :</strong>
-                                <?php echo htmlspecialchars($film['realisateur']); ?>
-                            </p>
-                            <p>
-                                <strong>Genre :</strong>
-                                <?php echo htmlspecialchars($film['genre']); ?>
-                            </p>
-                            <p>
-                                <strong>Durée :</strong>
-                                <span class="duree">
-                                    <?php echo formatDuree($film['duree']); ?>
-                                </span>
-                            </p>
+                            alt="<?php echo htmlspecialchars($film['titre']); ?>">
+                    <?php else: ?>
+                        <div class="placeholder">
+                            <span>🎬</span>
+                            <p><?php echo htmlspecialchars($film['titre']); ?></p>
                         </div>
-                        <nav class="actions">
-                            <a href="detail_film.php?id=<?php echo $film['id']; ?>">Voir plus</a>
-                        </nav>
+                    <?php endif; ?>
+                    <div class="film-title-overlay">
+                        <?php echo htmlspecialchars($film['titre']); ?>
                     </div>
-                </li>
+                </a>
             <?php endforeach; ?>
-        </ul>
+        </div>
     <?php else: ?>
         <p class="no-films">Aucun film dans la base de données.</p>
     <?php endif; ?>

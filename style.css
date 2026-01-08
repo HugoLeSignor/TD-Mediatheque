@@ -109,6 +109,76 @@ img {
     background-color: #e85a24;
 }
 
+/* * Grille pour les posters de films sur l'index */
+.film-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.film-poster {
+    position: relative;
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    aspect-ratio: 2/3;
+    text-decoration: none;
+}
+
+.film-poster:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+}
+
+.film-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    margin: 0;
+    border: none;
+}
+
+.film-poster .placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border: 2px dashed #3a3a3a;
+}
+
+.film-poster .placeholder span {
+    font-size: 4em;
+}
+
+.film-poster .placeholder p {
+    color: #ff8c42;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 20px;
+    margin: 0;
+}
+
+.film-title-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
+    color: white;
+    padding: 30px 15px 15px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.1em;
+}
+
 .film-list {
     list-style: none;
     padding: 0;
