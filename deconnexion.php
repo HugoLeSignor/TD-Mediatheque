@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Détruire toutes les variables de session
+// * Détruire la session utilisateur
 session_destroy();
 
-// Rediriger vers la page d'accueil
+// Redirection vers l'accueil
 header('Location: index.php');
 exit;
 ?>

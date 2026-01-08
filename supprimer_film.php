@@ -2,19 +2,19 @@
 require_once 'config.php';
 session_start();
 
-// Vérifier que l'utilisateur est connecté
+// ! Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: connexion.php');
     exit;
 }
 
-// Récupérer l'ID du film
-if (!isset($_GET['id'])) {
+// * Récupérer l'ID du film
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header('Location: films.php');
     exit;
 }
 
-$film_id = $_GET['id'];
+$film_id = intval($_GET['id']);
 
 // Récupérer le film
 $sql = "SELECT * FROM fiche_film WHERE id = :id";

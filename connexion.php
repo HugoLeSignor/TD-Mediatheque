@@ -4,16 +4,16 @@ session_start();
 
 $message = '';
 
-// Si le formulaire est envoyé
+// * Traitement du formulaire de connexion
 if (isset($_POST['nom']) && isset($_POST['password'])) {
     $nom = trim($_POST['nom']);
     $password = $_POST['password'];
 
-    // Vérifier que les champs ne sont pas vides
+    // ! Validation des champs
     if (empty($nom) || empty($password)) {
         $message = "Veuillez remplir tous les champs.";
     } else {
-        // Chercher l'utilisateur dans la base de données
+        // * Rechercher l'utilisateur dans la base
         $sql = "SELECT * FROM user WHERE nom = :nom";
         $stmt = $pdo->prepare($sql);
         $stmt->execute(array(':nom' => $nom));
@@ -21,11 +21,14 @@ if (isset($_POST['nom']) && isset($_POST['password'])) {
 
         // Vérifier le mot de passe
         if ($user && password_verify($password, $user['password'])) {
+            // Régénérer l'ID de session pour éviter le vol de session
+            session_regenerate_id(true);
+
             // Connecter l'utilisateur
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_nom'] = $user['nom'];
             $_SESSION['user_prenom'] = $user['prenom'];
-            
+
             // Rediriger vers la page d'accueil
             header('Location: index.php');
             exit;
@@ -43,25 +46,25 @@ $nav_links = [
 ];
 include 'includes/header.php';
 ?>
-        <section>
-            <?php if (!empty($message)): ?>
-                <div class="error">
-                    <?php echo htmlspecialchars($message); ?>
-                </div>
-            <?php endif; ?>
+<section>
+    <?php if (!empty($message)): ?>
+        <div class="error">
+            <?php echo htmlspecialchars($message); ?>
+        </div>
+    <?php endif; ?>
 
-            <form method="POST" action="">
-                <div class="form-group">
-                    <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" required>
-                </div>
+    <form method="POST" action="">
+        <div class="form-group">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+        </div>
 
-                <div class="form-group">
-                    <label for="password">Mot de passe :</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
+        <div class="form-group">
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" required>
+        </div>
 
-                <button type="submit">Se connecter</button>
-            </form>
-        </section>
+        <button type="submit">Se connecter</button>
+    </form>
+</section>
 <?php include 'includes/footer.php'; ?>

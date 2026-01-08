@@ -1,19 +1,19 @@
 <?php
-// Connexion à la base de données
+// * Connexion à la base de données
 $host = 'localhost';
 $dbname = 'mediatheque';
 $user = 'root';
 $pass = '';
 
-// On se connecte à la base de données
+// * Initialisation de la connexion PDO
 try {
     $pdo = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8", 
-        $user, 
+        "mysql:host=$host;dbname=$dbname;charset=utf8",
+        $user,
         $pass
     );
     $pdo->setAttribute(
-        PDO::ATTR_ERRMODE, 
+        PDO::ATTR_ERRMODE,
         PDO::ERRMODE_EXCEPTION
     );
 } catch (PDOException $e) {
